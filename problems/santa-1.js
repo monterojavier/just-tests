@@ -22,12 +22,9 @@ const fs = require("fs");
 function wrappingRequired(filename) {
   let totalPaper = 0;
 
-  const presentDimensions = fs
-    .readFileSync(
-      `/Users/javiermontero/Desktop/just-tests/problems/presents.txt`
-    )
-    .toString()
-    .split("\n");
+  const presentDimensions = txtFileToArray(
+    `/Users/javiermontero/Desktop/just-tests/problems/presents.txt`
+  );
 
   for (let i = 0; i < presentDimensions.length - 1; i++) {
     const boxDimension = presentDimensions[i].split("x").sort((a, b) => a - b);
@@ -41,4 +38,7 @@ function wrappingRequired(filename) {
   return totalPaper;
 }
 
+function txtFileToArray(filename) {
+  return fs.readFileSync(filename).toString().split("\n");
+}
 module.exports = wrappingRequired;
