@@ -17,14 +17,28 @@
 // paper plus 1 square foot of slack, for a total of 43 square feet.
 
 // All numbers in the elves' list are in feet. How many total square feet of wrapping paper should they order?
-const fs = require('fs')
-function wrappingRequired (filename) {
-  fs.readFile('presents.txt', (err, data) => {
-    if(err) throw err;
+const fs = require("fs");
 
-    console.log(data.toString())
-  })
-  return 0
+function wrappingRequired(filename) {
+  let totalPaper = 0;
+
+  const presentDimensions = fs
+    .readFileSync(
+      `/Users/javiermontero/Desktop/just-tests/problems/presents.txt`
+    )
+    .toString()
+    .split("\n");
+
+  for (let i = 0; i < presentDimensions.length - 1; i++) {
+    const boxDimension = presentDimensions[i].split("x").sort((a, b) => a - b);
+    const l = boxDimension[0];
+    const w = boxDimension[1];
+    const h = boxDimension[2];
+
+    totalPaper += 3 * l * w + 2 * w * h + 2 * h * l;
+  }
+
+  return totalPaper;
 }
 
-module.exports = wrappingRequired
+module.exports = wrappingRequired;
